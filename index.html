@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaFlow Plumbing | Professional Plumbing Services</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@5/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@5/500.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@5/600.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@5/700.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@5/800.css');
+
+:root {
+--navy: #0a1628;
+--navy-light: #112240;
+--blue-primary: #1a6fc4;
+--blue-light: #2d8ee0;
+--blue-glow: #4da3f5;
+--orange: #f07c34;
+--orange-hover: #e06820;
+--light-bg: #f0f7ff;
+--card-bg: #ffffff;
+--text-dark: #1a1a2e;
+--text-muted: #6b7280;
+--border-light: #e2e8f0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: var(--text-dark); overflow-x: hidden; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--blue-primary); border-radius: 4px; }
+
+/* Navigation */
+.navbar {
+position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+padding: 1rem 0;
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.navbar.scrolled {
+background: rgba(10, 22, 40, 0.95);
+backdrop-filter: blur(20px);
+padding: 0.6rem 0;
+box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+.nav-link {
+position: relative; color: rgba(255,255,255,0.8); text-decoration: none;
+font-weight: 500; font-size: 0.95rem; padding: 0.5rem 0;
+transition: color 0.3s ease;
+}
+.nav-link:hover, .nav-link.active { color: #fff; }
+.nav-link::after {
+content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+background: var(--orange); transition: width 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+/* Mobile Menu */
+.mobile-menu {
+transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mobile-menu.open { transform: translateX(0); }
+
+/* Hero Section */
+.hero-section {
+min-height: 100vh; position: relative; overflow: hidden;
+background: linear-gradient(135deg, var(--navy) 0%, #0d2137 50%, var(--navy-light) 100%);
+display: flex; align-items: center;
+}
+.hero-bg-pattern {
+position: absolute; inset: 0; opacity: 0.05;
+background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0);
+background-size: 40px 40px;
+}
+.hero-glow {
+position: absolute; width: 600px; height: 600px; border-radius: 50%;
+filter: blur(120px); opacity: 0.15;
+}
+.water-drop {
+position: absolute; border-radius: 50%;
+background: radial-gradient(circle at 30% 30%, rgba(77,163,245,0.6), rgba(26,111,196,0.2));
+animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+0% { transform: translateY(100vh) scale(0); opacity: 0; }
+10% { opacity: 1; }
+90% { opacity: 1; }
+100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* Section Styles */
+.section { padding: 100px 0; position: relative; }
+.section-title {
+font-size: 2.75rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;
+}
+.section-subtitle {
+font-size: 1.15rem; color: var(--text-muted); max-width: 600px; line-height: 1.7;
+}
+.section-badge {
+display: inline-flex; align-items: center; gap: 0.5rem;
+padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+margin-bottom: 1rem;
+}
+
+/* Service Cards */
+.service-card {
+background: var(--card-bg); border-radius: 20px; overflow: hidden;
+box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+border: 1px solid var(--border-light);
+cursor: pointer; position: relative;
+}
+.service-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 20px 60px rgba(26,111,196,0.15);
+border-color: var(--blue-primary);
+}
+.service-card .card-img {
+height: 200px; overflow: hidden; position: relative;
+}
+.service-card .card-img img {
+width: 100%; height: 100%; object-fit: cover;
+transition: transform 0.6s ease;
+}
+.service-card:hover .card-img img { transform: scale(1.08); }
+.service-card .card-overlay {
+position: absolute; inset: 0;
+background: linear-gradient(to top, rgba(10,22,40,0.8), transparent);
+opacity: 0; transition: opacity 0.4s ease;
+display: flex; align-items: flex-end; padding: 1.5rem;
+}
+.service-card:hover .card-overlay { opacity: 1; }
+.price-tag {
+display: inline-block; padding: 0.3rem 0.8rem; border-radius: 50px;
+font-weight: 700; font-size: 0.85rem;
+}
+
+/* Location Cards */
+.location-card {
+background: var(--card-bg); border-radius: 16px; padding: 2rem;
+box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+transition: all 0.4s ease; border: 1px solid var(--border-light);
+position: relative; overflow: hidden;
+}
+.location-card::before {
+content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+background: linear-gradient(90deg, var(--blue-primary), var(--blue-glow));
+transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left;
+}
+.location-card:hover::before { transform: scaleX(1); }
+.location-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 12px 40px rgba(26,111,196,0.12);
+}
+
+/* Testimonial */
+.testimonial-card {
+background: var(--card-bg); border-radius: 20px; padding: 2.5rem;
+box-shadow: 0 4px 25px rgba(0,0,0,0.06);
+border: 1px solid var(--border-light);
+transition: all 0.3s ease;
+}
+.testimonial-card:hover { box-shadow: 0 8px 40px rgba(26,111,196,0.1); }
+.star-rating { display: flex; gap: 3px; }
+.star-rating svg { width: 18px; height: 18px; }
+
+/* Testimonial Carousel */
+.testimonial-track {
+display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.carousel-dot {
+width: 10px; height: 10px; border-radius: 50%;
+background: var(--border-light); cursor: pointer;
+transition: all 0.3s ease; border: none; padding: 0;
+}
+.carousel-dot.active {
+background: var(--blue-primary); width: 30px; border-radius: 5px;
+}
+
+/* Contact Form */
+.form-input {
+width: 100%; padding: 0.9rem 1.2rem; border: 2px solid var(--border-light);
+border-radius: 12px; font-size: 1rem; font-family: 'Inter', sans-serif;
+transition: all 0.3s ease; background: #fff;
+}
+.form-input:focus {
+outline: none; border-color: var(--blue-primary);
+box-shadow: 0 0 0 4px rgba(26,111,196,0.1);
+}
+.form-input.error { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
+
+/* Buttons */
+.btn-primary {
+display: inline-flex; align-items: center; gap: 0.5rem;
+padding: 0.9rem 2rem; border-radius: 12px; font-weight: 600;
+font-size: 1rem; border: none; cursor: pointer;
+background: linear-gradient(135deg, var(--orange), var(--orange-hover));
+color: #fff; transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(240,124,52,0.3);
+}
+.btn-primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(240,124,52,0.4);
+}
+.btn-secondary {
+display: inline-flex; align-items: center; gap: 0.5rem;
+padding: 0.9rem 2rem; border-radius: 12px; font-weight: 600;
+font-size: 1rem; border: 2px solid rgba(255,255,255,0.3); cursor: pointer;
+background: transparent; color: #fff; transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6);
+}
+.btn-blue {
+display: inline-flex; align-items: center; gap: 0.5rem;
+padding: 0.9rem 2rem; border-radius: 12px; font-weight: 600;
+font-size: 1rem; border: none; cursor: pointer;
+background: linear-gradient(135deg, var(--blue-primary), var(--blue-light));
+color: #fff; transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(26,111,196,0.3);
+}
+.btn-blue:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(26,111,196,0.4);
+}
+
+/* Floating CTA */
+.floating-cta {
+position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+width: 60px; height: 60px; border-radius: 50%;
+background: linear-gradient(135deg, var(--orange), var(--orange-hover));
+color: #fff; display: flex; align-items: center; justify-content: center;
+cursor: pointer; box-shadow: 0 4px 20px rgba(240,124,52,0.4);
+transition: all 0.3s ease; border: none;
+animation: pulse 2s infinite;
+}
+.floating-cta:hover { transform: scale(1.1); }
+@keyframes pulse {
+0%, 100% { box-shadow: 0 4px 20px rgba(240,124,52,0.4); }
+50% { box-shadow: 0 4px 30px rgba(240,124,52,0.6), 0 0 0 10px rgba(240,124,52,0.1); }
+}
+
+/* Counter Animation */
+.counter-value { font-variant-numeric: tabular-nums; }
+
+/* Scroll Reveal */
+.reveal {
+opacity: 0; transform: translateY(40px);
+transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible {
+opacity: 1; transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* FAQ Accordion */
+.faq-item {
+border: 1px solid var(--border-light); border-radius: 12px;
+overflow: hidden; transition: all 0.3s ease;
+}
+.faq-item:hover { border-color: var(--blue-primary); }
+.faq-answer {
+max-height: 0; overflow: hidden;
+transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.faq-item.open .faq-answer { max-height: 200px; }
+.faq-icon {
+transition: transform 0.3s ease;
+}
+.faq-item.open .faq-icon { transform: rotate(180deg); }
+
+/* Pricing Toggle */
+.pricing-toggle {
+width: 60px; height: 32px; border-radius: 16px;
+background: var(--border-light); cursor: pointer;
+position: relative; transition: background 0.3s ease; border: none;
+}
+.pricing-toggle.active { background: var(--blue-primary); }
+.pricing-toggle .toggle-dot {
+width: 26px; height: 26px; border-radius: 50%;
+background: #fff; position: absolute; top: 3px; left: 3px;
+transition: transform 0.3s ease;
+box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.pricing-toggle.active .toggle-dot { transform: translateX(28px); }
+
+/* Modal */
+.modal-overlay {
+position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+backdrop-filter: blur(5px); z-index: 2000;
+display: flex; align-items: center; justify-content: center;
+opacity: 0; visibility: hidden; transition: all 0.3s ease;
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-content {
+background: #fff; border-radius: 20px; padding: 2.5rem;
+max-width: 500px; width: 90%; transform: scale(0.9);
+transition: transform 0.3s ease;
+}
+.modal-overlay.active .modal-content { transform: scale(1); }
+
+/* Toast */
+.toast {
+position: fixed; top: 100px; right: 2rem; z-index: 3000;
+background: #fff; border-radius: 12px; padding: 1rem 1.5rem;
+box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+display: flex; align-items: center; gap: 0.75rem;
+transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toast.show { transform: translateX(0); }
+
+/* Gradient Text */
+.gradient-text {
+background: linear-gradient(135deg, var(--blue-glow), var(--orange));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+/* Map placeholder */
+.map-container {
+background: var(--navy-light); border-radius: 16px; overflow: hidden;
+position: relative; min-height: 400px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+.section { padding: 60px 0; }
+.section-title { font-size: 2rem; }
+.hero-section { min-height: auto; padding: 120px 0 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+<div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+<a href="#home" class="flex items-center gap-2 text-white font-bold text-xl">
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+<circle cx="18" cy="18" r="17" stroke="#1a6fc4" stroke-width="2"/>
+<path d="M12 14c0-3.3 2.7-6 6-6s6 2.7 6 6c0 6-6 10-6 10s-6-4-6-10z" fill="#1a6fc4"/>
+<circle cx="18" cy="13" r="2" fill="#fff"/>
+</svg>
+<span>AquaFlow</span>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a href="#home" class="nav-link active" data-section="home">Home</a>
+<a href="#locations" class="nav-link" data-section="locations">Locations</a>
+<a href="#services" class="nav-link" data-section="services">Services & Pricing</a>
+<a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a>
+<a href="#contact" class="nav-link" data-section="contact">Contact Us</a>
+<button class="btn-primary text-sm py-2 px-5" onclick="openModal()">
+<i data-lucide="phone" class="w-4 h-4"></i>
+Get a Free Quote
+</button>
+</div>
+<button class="md:hidden text-white" onclick="toggleMobileMenu()">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<line x1="3" y1="6" x2="21" y2="6"/>
+<line x1="3" y1="12" x2="21" y2="12"/>
+<line x1="3" y1="18" x2="21" y2="18"/>
+</svg>
+</button>
+</div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu fixed inset-y-0 right-0 w-80 bg-[var(--navy)] z-[1001] p-8" id="mobileMenu">
+<button class="absolute top-6 right-6 text-white" onclick="toggleMobileMenu()">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<line x1="18" y1="6" x2="6" y2="18"/>
+<line x1="6" y1="6" x2="18" y2="18"/>
+</svg>
+</button>
+<div class="flex flex-col gap-6 mt-12">
+<a href="#home" class="text-white text-lg font-medium" onclick="toggleMobileMenu()">Home</a>
+<a href="#locations" class="text-white text-lg font-medium" onclick="toggleMobileMenu()">Locations</a>
+<a href="#services" class="text-white text-lg font-medium" onclick="toggleMobileMenu()">Services & Pricing</a>
+<a href="#testimonials" class="text-white text-lg font-medium" onclick="toggleMobileMenu()">Testimonials</a>
+<a href="#contact" class="text-white text-lg font-medium" onclick="toggleMobileMenu()">Contact Us</a>
+<button class="btn-primary justify-center mt-4" onclick="openModal(); toggleMobileMenu();">
+Get a Free Quote
+</button>
+</div>
+</div>
+
+<!-- Mobile Menu Overlay -->
+<div class="fixed inset-0 bg-black/50 z-[1000] hidden" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+<!-- ============ SECTION 1: HOMEPAGE ============ -->
+<section id="home" class="hero-section">
+<div class="hero-bg-pattern"></div>
+<div class="hero-glow" style="top:-200px;right:-100px;background:var(--blue-primary);"></div>
+<div class="hero-glow" style="bottom:-200px;left:-100px;background:var(--orange);"></div>
+<div id="waterDrops"></div>
+
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div>
+<div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+<span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+<span class="text-white/80 text-sm font-medium">Available 24/7 for Emergencies</span>
+</div>
+<h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-6">
+Expert Plumbing<br>
+<span class="gradient-text">You Can Trust</span>
+</h1>
+<p class="text-lg text-white/70 leading-relaxed mb-8 max-w-lg">
+From emergency repairs to complete installations, AquaFlow Plumbing delivers fast, reliable, and affordable plumbing solutions for your home and business.
+</p>
+<div class="flex flex-wrap gap-4 mb-10">
+<button class="btn-primary text-lg" onclick="openModal()">
+<i data-lucide="calendar" class="w-5 h-5"></i>
+Book Now
+</button>
+<button class="btn-secondary text-lg" onclick="scrollToSection('services')">
+<i data-lucide="arrow-right" class="w-5 h-5"></i>
+View Services
+</button>
+</div>
+<div class="flex flex-wrap gap-8">
+<div class="text-center">
+<div class="text-3xl font-bold text-white counter-value" data-target="15">0</div>
+<div class="text-white/50 text-sm mt-1">Years Experience</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-white counter-value" data-target="12000">0</div>
+<div class="text-white/50 text-sm mt-1">Jobs Completed</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-white counter-value" data-target="98">0</div>
+<div class="text-white/50 text-sm mt-1">% Satisfaction</div>
+</div>
+</div>
+</div>
+<div class="hidden lg:block relative">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/13ec16c38-690b-44a4-bacb-a61e876b867e.png"
+alt="Professional Plumber" class="rounded-2xl shadow-2xl w-full max-w-md mx-auto"
+style="border: 3px solid rgba(255,255,255,0.1);">
+<div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+<polyline points="20 6 9 17 4 12"/>
+</svg>
+</div>
+<div>
+<div class="font-bold text-sm text-gray-900">Licensed & Insured</div>
+<div class="text-xs text-gray-500">Fully Certified Team</div>
+</div>
+</div>
+</div>
+<div class="absolute -top-4 -right-4 bg-[var(--orange)] rounded-2xl p-4 shadow-xl text-white">
+<div class="text-2xl font-bold">24/7</div>
+<div class="text-xs font-medium opacity-90">Emergency Service</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============ SECTION 2: LOCATIONS ============ -->
+<section id="locations" class="section" style="background: var(--light-bg);">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16 reveal">
+<div class="section-badge bg-blue-100 text-blue-700">
+<i data-lucide="map-pin" class="w-4 h-4"></i>
+Our Coverage Areas
+</div>
+<h2 class="section-title text-[var(--navy)]">Serving Communities Across <span class="gradient-text">The Region</span></h2>
+<p class="section-subtitle mx-auto">We provide professional plumbing services to homes and businesses across multiple locations. Find your nearest AquaFlow service center.</p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<div class="location-card reveal reveal-delay-1" data-aos-delay="100">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+<i data-lucide="building-2" class="w-7 h-7 text-[var(--blue-primary)]"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-[var(--navy)] mb-1">Downtown Metro</h3>
+<p class="text-sm text-[var(--text-muted)] mb-3">City Center & surrounding business district</p>
+<div class="flex items-center gap-2 text-sm text-[var(--blue-primary)] font-medium">
+<i data-lucide="clock" class="w-4 h-4"></i>
+<span>Mon-Sun: 6AM - 10PM</span>
+</div>
+</div>
+</div>
+</div>
+<div class="location-card reveal reveal-delay-2" data-aos-delay="200">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-orange-100 flex items-center justify-center flex-shrink-0">
+<i data-lucide="trees" class="w-7 h-7 text-[var(--orange)]"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-[var(--navy)] mb-1">Riverside Heights</h3>
+<p class="text-sm text-[var(--text-muted)] mb-3">Suburban neighborhoods & residential areas</p>
+<div class="flex items-center gap-2 text-sm text-[var(--blue-primary)] font-medium">
+<i data-lucide="clock" class="w-4 h-4"></i>
+<span>Mon-Sun: 7AM - 9PM</span>
+</div>
+</div>
+</div>
+</div>
+<div class="location-card reveal reveal-delay-3" data-aos-delay="300">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+<i data-lucide="mountain" class="w-7 h-7 text-green-600"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-[var(--navy)] mb-1">Oak Valley</h3>
+<p class="text-sm text-[var(--text-muted)] mb-3">Oak Valley township & nearby communities</p>
+<div class="flex items-center gap-2 text-sm text-[var(--blue-primary)] font-medium">
+<i data-lucide="clock" class="w-4 h-4"></i>
+<span>Mon-Sat: 7AM - 8PM</span>
+</div>
+</div>
+</div>
+</div>
+<div class="location-card reveal reveal-delay-1" data-aos-delay="100">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
+<i data-lucide="waves" class="w-7 h-7 text-purple-600"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-[var(--navy)] mb-1">Harbor Bay</h3>
+<p class="text-sm text-[var(--text-muted)] mb-3">Coastal areas & waterfront properties</p>
+<div class="flex items-center gap-2 text-sm text-[var(--blue-primary)] font-medium">
+<i data-lucide="clock" class="w-4 h-4"></i>
+<span>Mon-Sun: 6AM - 10PM</span>
+</div>
+</div>
+</div>
+</div>
+<div class="location-card reveal reveal-delay-2" data-aos-delay="200">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-yellow-100 flex items-center justify-center flex-shrink-0">
+<i data-lucide="factory" class="w-7 h-7 text-yellow-600"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-[var(--navy)] mb-1">Industrial Park</h3>
+<p class="text-sm text-[var(--text-muted)] mb-3">Commercial zones & industrial facilities</p>
+<div class="flex items-center gap-2 text-sm text-[var(--blue-primary)] font-medium">
+<i data-lucide="clock" class="w-4 h-4"></i>
+<span>Mon-Fri: 6AM - 6PM</span>
+</div>
+</div>
+</div>
+</div>
+<div class="location-card reveal reveal-delay-3" data-aos-delay="300">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+<i data-lucide="circle-help" class="w-7 h-7 text-red-600"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-[var(--navy)] mb-1">Maplewood Estates</h3>
+<p class="text-sm text-[var(--text-muted)] mb-3">Premium residential community & estates</p>
+<div class="flex items-center gap-2 text-sm text-[var(--blue-primary)] font-medium">
+<i data-lucide="clock" class="w-4 h-4"></i>
+<span>Mon-Sun: 7AM - 9PM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Map Section -->
+<div class="map-container reveal" style="background: linear-gradient(135deg, var(--navy), var(--navy-light));">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/1d20f7f5e-7499-4488-bdab-90cb1bde9f2f.png"
+alt="Service Area Map" class="w-full max-w-3xl mx-auto rounded-lg opacity-80 mb-6">
+<h3 class="text-white text-xl font-bold mb-2">Find Your Nearest Service Center</h3>
+<p class="text-white/60 text-sm mb-4">We're never far away — fast response times guaranteed</p>
+<div class="flex justify-center gap-4">
+<span class="inline-flex items-center gap-2 text-white/80 text-sm bg-white/10 rounded-full px-4 py-2">
+<span class="w-3 h-3 rounded-full bg-green-400"></span>
+Active Service Area
+</span>
+<span class="inline-flex items-center gap-2 text-white/80 text-sm bg-white/10 rounded-full px-4 py-2">
+<span class="w-3 h-3 rounded-full bg-[var(--orange)]"></span>
+24/7 Emergency
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============ SECTION 3: SERVICES & PRICING ============ -->
+<section id="services" class="section" style="background: #fff;">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-12 reveal">
+<div class="section-badge bg-orange-100 text-orange-700">
+<i data-lucide="wrench" class="w-4 h-4"></i>
+Our Services
+</div>
+<h2 class="section-title text-[var(--navy)]">Professional Plumbing <span class="gradient-text">Services & Pricing</span></h2>
+<p class="section-subtitle mx-auto">Transparent pricing with no hidden fees. Choose from our comprehensive range of plumbing services tailored to your needs.</p>
+</div>
+
+<!-- Pricing Toggle -->
+<div class="flex items-center justify-center gap-4 mb-12 reveal">
+<span class="text-sm font-semibold text-[var(--navy)]" id="residentialLabel">Residential</span>
+<button class="pricing-toggle" id="pricingToggle" onclick="togglePricing()">
+<div class="toggle-dot"></div>
+</button>
+<span class="text-sm font-semibold text-gray-400" id="commercialLabel">Commercial</span>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="servicesGrid">
+<!-- Service 1 -->
+<div class="service-card reveal reveal-delay-1" onclick="showServiceDetail('Emergency Repair')">
+<div class="card-img">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/1665b1496-8ffc-463b-94b9-a22a5fd8488e.png" alt="Emergency Repair">
+<div class="card-overlay">
+<span class="price-tag bg-[var(--orange)] text-white">From $89</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
+<i data-lucide="zap" class="w-5 h-5 text-red-500"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Emergency Repair</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">24/7 emergency response for burst pipes, severe leaks, and flooding. Average response time under 30 minutes.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="89" data-commercial="149">$89</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 2 -->
+<div class="service-card reveal reveal-delay-2" onclick="showServiceDetail('Drain Cleaning')">
+<div class="card-img">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/10cca00ab-ca3d-4382-80f9-09aec50d8061.png" alt="Drain Cleaning">
+<div class="card-overlay">
+<span class="price-tag bg-green-500 text-white">From $120</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+<i data-lucide="droplets" class="w-5 h-5 text-[var(--blue-primary)]"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Drain Cleaning</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Professional hydro-jetting and mechanical drain cleaning for kitchens, bathrooms, and main sewer lines.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="120" data-commercial="250">$120</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 3 -->
+<div class="service-card reveal reveal-delay-3" onclick="showServiceDetail('Water Heater')">
+<div class="card-img">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/14054daf2-ec2b-4ef2-b138-adf003407af0.png" alt="Water Heater">
+<div class="card-overlay">
+<span class="price-tag bg-[var(--orange)] text-white">From $199</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
+<i data-lucide="flame" class="w-5 h-5 text-[var(--orange)]"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Water Heater</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Installation, repair, and maintenance of tank and tankless water heaters. Energy-efficient solutions available.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="199" data-commercial="450">$199</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 4 -->
+<div class="service-card reveal reveal-delay-4" onclick="showServiceDetail('Bathroom Renovation')">
+<div class="card-img">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/12fb15371-259b-450f-850b-263d206770a4.png" alt="Bathroom Renovation">
+<div class="card-overlay">
+<span class="price-tag bg-purple-500 text-white">From $499</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+<i data-lucide="bath" class="w-5 h-5 text-purple-600"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Bathroom Renovation</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Complete bathroom plumbing renovation including fixture installation, re-piping, and custom layouts.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="499" data-commercial="1200">$499</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 5 -->
+<div class="service-card reveal reveal-delay-1" onclick="showServiceDetail('Pipe Repair & Replacement')">
+<div class="card-img" style="background: linear-gradient(135deg, var(--navy), var(--navy-light)); display: flex; align-items: center; justify-content: center;">
+<div style="text-align: center; color: white;">
+<i data-lucide="pipe" class="w-16 h-16 mx-auto mb-3 opacity-60"></i>
+<div class="text-sm opacity-50">Pipe Repair & Replacement</div>
+</div>
+<div class="card-overlay">
+<span class="price-tag bg-[var(--blue-primary)] text-white">From $150</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center">
+<i data-lucide="pipe" class="w-5 h-5 text-indigo-600"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Pipe Repair</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Expert pipe repair and full replacement services. Copper, PEX, and PVC piping solutions.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="150" data-commercial="350">$150</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 6 -->
+<div class="service-card reveal reveal-delay-2" onclick="showServiceDetail('Fixture Installation')">
+<div class="card-img" style="background: linear-gradient(135deg, #1a3a5c, #2d5a87); display: flex; align-items: center; justify-content: center;">
+<div style="text-align: center; color: white;">
+<i data-lucide="faucet" class="w-16 h-16 mx-auto mb-3 opacity-60"></i>
+<div class="text-sm opacity-50">Fixture Installation</div>
+</div>
+<div class="card-overlay">
+<span class="price-tag bg-green-500 text-white">From $75</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center">
+<i data-lucide="faucet" class="w-5 h-5 text-teal-600"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Fixture Installation</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Professional installation of faucets, toilets, showers, and sinks. All brands welcome.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="75" data-commercial="175">$75</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 7 -->
+<div class="service-card reveal reveal-delay-3" onclick="showServiceDetail('Sewer Line Services')">
+<div class="card-img" style="background: linear-gradient(135deg, #2d1a0a, #5a3a1a); display: flex; align-items: center; justify-content: center;">
+<div style="text-align: center; color: white;">
+<i data-lucide="scan-line" class="w-16 h-16 mx-auto mb-3 opacity-60"></i>
+<div class="text-sm opacity-50">Sewer Line Services</div>
+</div>
+<div class="card-overlay">
+<span class="price-tag bg-amber-500 text-white">From $250</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+<i data-lucide="scan-line" class="w-5 h-5 text-amber-600"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Sewer Line Services</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Camera inspection, trenchless repair, and complete sewer line replacement with minimal disruption.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="250" data-commercial="600">$250</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+
+<!-- Service 8 -->
+<div class="service-card reveal reveal-delay-4" onclick="showServiceDetail('Gas Line Services')">
+<div class="card-img" style="background: linear-gradient(135deg, #1a0a2d, #3a1a5a); display: flex; align-items: center; justify-content: center;">
+<div style="text-align: center; color: white;">
+<i data-lucide="flame-kindling" class="w-16 h-16 mx-auto mb-3 opacity-60"></i>
+<div class="text-sm opacity-50">Gas Line Services</div>
+</div>
+<div class="card-overlay">
+<span class="price-tag bg-red-500 text-white">From $200</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
+<i data-lucide="flame-kindling" class="w-5 h-5 text-red-600"></i>
+</div>
+<h3 class="font-bold text-lg text-[var(--navy)]">Gas Line Services</h3>
+</div>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4">Certified gas line installation, leak detection, and repair for residential and commercial properties.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-[var(--blue-primary)]" data-residential="200" data-commercial="400">$200</span>
+<span class="text-sm text-[var(--text-muted)]">starting from</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- FAQ Section -->
+<div class="mt-16 max-w-3xl mx-auto reveal">
+<h3 class="text-2xl font-bold text-center text-[var(--navy)] mb-8">Frequently Asked Questions</h3>
+<div class="space-y-3">
+<div class="faq-item">
+<button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+<span class="font-semibold text-[var(--navy)] pr-4">Do you offer free estimates?</span>
+<i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-[var(--blue-primary)] flex-shrink-0"></i>
+</button>
+<div class="faq-answer">
+<p class="px-5 pb-5 text-sm text-[var(--text-muted)] leading-relaxed">Yes! We provide free estimates for all non-emergency services. Simply fill out our contact form or give us a call, and we'll schedule a visit to assess your plumbing needs at no cost.</p>
+</div>
+</div>
+<div class="faq-item">
+<button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+<span class="font-semibold text-[var(--navy)] pr-4">What is your response time for emergencies?</span>
+<i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-[var(--blue-primary)] flex-shrink-0"></i>
+</button>
+<div class="faq-answer">
+<p class="px-5 pb-5 text-sm text-[var(--text-muted)] leading-relaxed">Our average emergency response time is under 30 minutes within our primary service areas. We have teams on standby 24/7 to handle any plumbing emergency.</p>
+</div>
+</div>
+<div class="faq-item">
+<button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+<span class="font-semibold text-[var(--navy)] pr-4">Are your plumbers licensed and insured?</span>
+<i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-[var(--blue-primary)] flex-shrink-0"></i>
+</button>
+<div class="faq-answer">
+<p class="px-5 pb-5 text-sm text-[var(--text-muted)] leading-relaxed">Absolutely. All AquaFlow plumbers are fully licensed, bonded, and insured. We undergo continuous training to stay current with the latest plumbing technologies and codes.</p>
+</div>
+</div>
+<div class="faq-item">
+<button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+<span class="font-semibold text-[var(--navy)] pr-4">Do you offer warranties on your work?</span>
+<i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-[var(--blue-primary)] flex-shrink-0"></i>
+</button>
+<div class="faq-answer">
+<p class="px-5 pb-5 text-sm text-[var(--text-muted)] leading-relaxed">Yes, all our work comes with a satisfaction guarantee. We offer a 1-year warranty on labor and manufacturer warranties on all parts and fixtures we install.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============ SECTION 4: TESTIMONIALS ============ -->
+<section id="testimonials" class="section" style="background: var(--light-bg);">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16 reveal">
+<div class="section-badge bg-yellow-100 text-yellow-700">
+<i data-lucide="star" class="w-4 h-4"></i>
+Customer Reviews
+</div>
+<h2 class="section-title text-[var(--navy)]">What Our Customers <span class="gradient-text">Say About Us</span></h2>
+<p class="section-subtitle mx-auto">Don't just take our word for it. Here's what thousands of satisfied customers have to say about AquaFlow Plumbing.</p>
+</div>
+
+<!-- Trust Badges -->
+<div class="flex flex-wrap justify-center gap-8 mb-12 reveal">
+<div class="flex items-center gap-3 bg-white rounded-xl px-5 py-3 shadow-sm">
+<img src="https://image.qwenlm.ai/public_source/156f1cb7-502b-4189-bd10-0212ef96bec3/117c348a7-9d48-4884-8b70-4ea8bd55450b.png" alt="5 Star" class="w-10 h-10">
+<div>
+<div class="font-bold text-sm text-[var(--navy)]">4.9/5 Rating</div>
+<div class="text-xs text-[var(--text-muted)]">2,400+ Reviews</div>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-white rounded-xl px-5 py-3 shadow-sm">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+<i data-lucide="shield-check" class="w-5 h-5 text-green-600"></i>
+</div>
+<div>
+<div class="font-bold text-sm text-[var(--navy)]">Verified Reviews</div>
+<div class="text-xs text-[var(--text-muted)]">All reviews verified</div>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-white rounded-xl px-5 py-3 shadow-sm">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+<i data-lucide="award" class="w-5 h-5 text-[var(--blue-primary)]"></i>
+</div>
+<div>
+<div class="font-bold text-sm text-[var(--navy)]">Award Winning</div>
+<div class="text-xs text-[var(--text-muted)]">Best Plumber 2024</div>
+</div>
+</div>
+</div>
+
+<!-- Testimonial Carousel -->
+<div class="relative overflow-hidden reveal">
+<div class="testimonial-track" id="testimonialTrack">
+<!-- Testimonial 1 -->
+<div class="testimonial-card min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] mr-4 mb-4" style="flex-shrink: 0;">
+<div class="star-rating mb-4">
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<p class="text-[var(--text-muted)] leading-relaxed mb-6 italic">"AquaFlow saved us during a midnight pipe burst. They arrived in 20 minutes and had everything fixed within the hour. Incredible service and very reasonable pricing. Highly recommend!"</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold">SM</div>
+<div>
+<div class="font-semibold text-[var(--navy)]">Sarah Mitchell</div>
+<div class="text-sm text-[var(--text-muted)]">Homeowner, Downtown Metro</div>
+</div>
+</div>
+</div>
+
+<!-- Testimonial 2 -->
+<div class="testimonial-card min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] mr-4 mb-4" style="flex-shrink: 0;">
+<div class="star-rating mb-4">
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<p class="text-[var(--text-muted)] leading-relaxed mb-6 italic">"We hired AquaFlow for a complete bathroom renovation. The team was professional, clean, and finished ahead of schedule. The quality of work is outstanding. Best plumbing company in the area!"</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold">JR</div>
+<div>
+<div class="font-semibold text-[var(--navy)]">James Rodriguez</div>
+<div class="text-sm text-[var(--text-muted)]">Homeowner, Riverside Heights</div>
+</div>
+</div>
+</div>
+
+<!-- Testimonial 3 -->
+<div class="testimonial-card min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] mr-4 mb-4" style="flex-shrink: 0;">
+<div class="star-rating mb-4">
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<p class="text-[var(--text-muted)] leading-relaxed mb-6 italic">"As a property manager, I need reliable plumbers. AquaFlow handles all 12 of our properties and they're always prompt, professional, and fairly priced. They're my go-to for everything plumbing."</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold">LC</div>
+<div>
+<div class="font-semibold text-[var(--navy)]">Lisa Chen</div>
+<div class="text-sm text-[var(--text-muted)]">Property Manager, Harbor Bay</div>
+</div>
+</div>
+</div>
+
+<!-- Testimonial 4 -->
+<div class="testimonial-card min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] mr-4 mb-4" style="flex-shrink: 0;">
+<div class="star-rating mb-4">
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<p class="text-[var(--text-muted)] leading-relaxed mb-6 italic">"Had a clogged main line on a Sunday evening. Called AquaFlow and they had someone at my door within 25 minutes. The technician was friendly, explained everything, and fixed it quickly. Five stars!"</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold">MW</div>
+<div>
+<div class="font-semibold text-[var(--navy)]">Michael Williams</div>
+<div class="text-sm text-[var(--text-muted)]">Homeowner, Oak Valley</div>
+</div>
+</div>
+</div>
+
+<!-- Testimonial 5 -->
+<div class="testimonial-card min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] mr-4 mb-4" style="flex-shrink: 0;">
+<div class="star-rating mb-4">
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<p class="text-[var(--text-muted)] leading-relaxed mb-6 italic">"AquaFlow installed a new tankless water heater for our restaurant. They worked around our business hours and made sure everything was perfect. Our energy bills have dropped significantly since!"</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold">AP</div>
+<div>
+<div class="font-semibold text-[var(--navy)]">Anna Patel</div>
+<div class="text-sm text-[var(--text-muted)]">Restaurant Owner, Industrial Park</div>
+</div>
+</div>
+</div>
+
+<!-- Testimonial 6 -->
+<div class="testimonial-card min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] mr-4 mb-4" style="flex-shrink: 0;">
+<div class="star-rating mb-4">
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<p class="text-[var(--text-muted)] leading-relaxed mb-6 italic">"We've been using AquaFlow for our apartment complex for 3 years now. They handle everything from routine maintenance to major renovations. Reliable, honest, and always deliver quality work."</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center text-white font-bold">DK</div>
+<div>
+<div class="font-semibold text-[var(--navy)]">David Kim</div>
+<div class="text-sm text-[var(--text-muted)]">Apartment Manager, Maplewood Estates</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Carousel Controls -->
+<div class="flex items-center justify-center gap-4 mt-8">
+<button class="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-[var(--blue-primary)] hover:text-white transition-all duration-300" onclick="slideCarousel(-1)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<div class="flex gap-2" id="carouselDots"></div>
+<button class="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-[var(--blue-primary)] hover:text-white transition-all duration-300" onclick="slideCarousel(1)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============ SECTION 5: CONTACT US ============ -->
+<section id="contact" class="section" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: #fff;">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid lg:grid-cols-2 gap-16">
+<!-- Contact Info -->
+<div>
+<div class="reveal">
+<div class="section-badge bg-white/10 text-white border border-white/20">
+<i data-lucide="mail" class="w-4 h-4"></i>
+Get In Touch
+</div>
+<h2 class="text-4xl md:text-5xl font-extrabold mb-6">Let's Fix Your<br><span class="gradient-text">Plumbing Problems</span></h2>
+<p class="text-white/60 text-lg leading-relaxed mb-10">Whether it's a leaky faucet or a full renovation, we're here to help. Reach out to us and get a free consultation.</p>
+</div>
+
+<div class="space-y-6 mb-10 reveal">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+<i data-lucide="phone" class="w-6 h-6 text-[var(--orange)]"></i>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Phone</h4>
+<p class="text-white/60">Emergency: <a href="tel:+18005550199" class="text-[var(--orange)] hover:underline">(800) 555-0199</a></p>
+<p class="text-white/60">Office: <a href="tel:+18005550100" class="text-[var(--orange)] hover:underline">(800) 555-0100</a></p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+<i data-lucide="mail" class="w-6 h-6 text-[var(--orange)]"></i>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Email</h4>
+<p class="text-white/60"><a href="mailto:info@aquaflowplumbing.com" class="text-[var(--orange)] hover:underline">info@aquaflowplumbing.com</a></p>
+<p class="text-white/60"><a href="mailto:emergency@aquaflowplumbing.com" class="text-[var(--orange)] hover:underline">emergency@aquaflowplumbing.com</a></p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+<i data-lucide="map-pin" class="w-6 h-6 text-[var(--orange)]"></i>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Main Office</h4>
+<p class="text-white/60">742 Evergreen Terrace, Suite 200<br>Springfield, ST 12345</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+<i data-lucide="clock" class="w-6 h-6 text-[var(--orange)]"></i>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Business Hours</h4>
+<p class="text-white/60">Mon - Fri: 7:00 AM - 8:00 PM</p>
+<p class="text-white/60">Sat - Sun: 8:00 AM - 6:00 PM</p>
+<p class="text-[var(--orange)] font-medium">Emergency: 24/7</p>
+</div>
+</div>
+</div>
+
+<!-- Social Links -->
+<div class="flex gap-3 reveal">
+<a href="#" class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center hover:bg-[var(--blue-primary)] transition-all duration-300">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+</a>
+<a href="#" class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center hover:bg-[var(--blue-primary)] transition-all duration-300">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+</a>
+<a href="#" class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center hover:bg-[var(--blue-primary)] transition-all duration-300">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+</a>
+<a href="#" class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center hover:bg-[var(--blue-primary)] transition-all duration-300">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+</a>
+</div>
+</div>
+
+<!-- Contact Form -->
+<div class="reveal">
+<div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+<h3 class="text-2xl font-bold mb-6">Send Us a Message</h3>
+<form id="contactForm" onsubmit="handleFormSubmit(event)">
+<div class="grid md:grid-cols-2 gap-4 mb-4">
+<div>
+<label class="block text-sm font-medium text-white/70 mb-2">First Name *</label>
+<input type="text" class="form-input !bg-white/10 !border-white/20 !text-white placeholder:text-white/30" placeholder="John" id="firstName" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-white/70 mb-2">Last Name *</label>
+<input type="text" class="form-input !bg-white/10 !border-white/20 !text-white placeholder:text-white/30" placeholder="Doe" id="lastName" required>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-4 mb-4">
+<div>
+<label class="block text-sm font-medium text-white/70 mb-2">Email *</label>
+<input type="email" class="form-input !bg-white/10 !border-white/20 !text-white placeholder:text-white/30" placeholder="john@example.com" id="email" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-white/70 mb-2">Phone *</label>
+<input type="tel" class="form-input !bg-white/10 !border-white/20 !text-white placeholder:text-white/30" placeholder="(555) 123-4567" id="phone" required>
+</div>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-white/70 mb-2">Service Needed</label>
+<select class="form-input !bg-white/10 !border-white/20 !text-white" id="serviceSelect">
+<option value="" class="!bg-[var(--navy)]">Select a service...</option>
+<option value="emergency" class="!bg-[var(--navy)]">Emergency Repair</option>
+<option value="drain" class="!bg-[var(--navy)]">Drain Cleaning</option>
+<option value="waterheater" class="!bg-[var(--navy)]">Water Heater</option>
+<option value="renovation" class="!bg-[var(--navy)]">Bathroom Renovation</option>
+<option value="pipe" class="!bg-[var(--navy)]">Pipe Repair & Replacement</option>
+<option value="fixture" class="!bg-[var(--navy)]">Fixture Installation</option>
+<option value="sewer" class="!bg-[var(--navy)]">Sewer Line Services</option>
+<option value="gas" class="!bg-[var(--navy)]">Gas Line Services</option>
+<option value="other" class="!bg-[var(--navy)]">Other</option>
+</select>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-white/70 mb-2">Location</label>
+<select class="form-input !bg-white/10 !border-white/20 !text-white" id="locationSelect">
+<option value="" class="!bg-[var(--navy)]">Select your area...</option>
+<option value="downtown" class="!bg-[var(--navy)]">Downtown Metro</option>
+<option value="riverside" class="!bg-[var(--navy)]">Riverside Heights</option>
+<option value="oakvalley" class="!bg-[var(--navy)]">Oak Valley</option>
+<option value="harborbay" class="!bg-[var(--navy)]">Harbor Bay</option>
+<option value="industrial" class="!bg-[var(--navy)]">Industrial Park</option>
+<option value="maplewood" class="!bg-[var(--navy)]">Maplewood Estates</option>
+<option value="other" class="!bg-[var(--navy)]">Other Area</option>
+</select>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-white/70 mb-2">Message</label>
+<textarea class="form-input !bg-white/10 !border-white/20 !text-white placeholder:text-white/30 resize-none" rows="4" placeholder="Describe your plumbing issue or project..." id="message"></textarea>
+</div>
+<button type="submit" class="btn-primary w-full justify-center text-lg" id="submitBtn">
+<i data-lucide="send" class="w-5 h-5"></i>
+Send Message
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer style="background: #060e1a; padding: 60px 0 30px;">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+<div>
+<a href="#home" class="flex items-center gap-2 text-white font-bold text-xl mb-4">
+<svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+<circle cx="18" cy="18" r="17" stroke="#1a6fc4" stroke-width="2"/>
+<path d="M12 14c0-3.3 2.7-6 6-6s6 2.7 6 6c0 6-6 10-6 10s-6-4-6-10z" fill="#1a6fc4"/>
+<circle cx="18" cy="13" r="2" fill="#fff"/>
+</svg>
+<span>AquaFlow</span>
+</a>
+<p class="text-white/50 text-sm leading-relaxed mb-4">Professional plumbing services you can trust. Licensed, insured, and committed to excellence since 2009.</p>
+<div class="flex items-center gap-2 text-white/50 text-sm">
+<i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+Licensed & Insured
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Quick Links</h4>
+<div class="space-y-2">
+<a href="#home" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Home</a>
+<a href="#locations" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Locations</a>
+<a href="#services" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Services & Pricing</a>
+<a href="#testimonials" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Testimonials</a>
+<a href="#contact" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Contact Us</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Services</h4>
+<div class="space-y-2">
+<a href="#services" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Emergency Repair</a>
+<a href="#services" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Drain Cleaning</a>
+<a href="#services" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Water Heater</a>
+<a href="#services" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Bathroom Renovation</a>
+<a href="#services" class="block text-white/50 text-sm hover:text-[var(--orange)] transition-colors">Pipe Repair</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Newsletter</h4>
+<p class="text-white/50 text-sm mb-4">Get plumbing tips and exclusive offers delivered to your inbox.</p>
+<div class="flex gap-2">
+<input type="email" placeholder="Your email" class="flex-1 px-4 py-2.5 rounded-xl bg-white/10 border border-white/10 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-[var(--blue-primary)]">
+<button class="px-4 py-2.5 rounded-xl bg-[var(--orange)] text-white font-semibold text-sm hover:bg-[var(--orange-hover)] transition-colors">
+<i data-lucide="arrow-right" class="w-4 h-4"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-white/40 text-sm">© 2024 AquaFlow Plumbing. All rights reserved.</p>
+<div class="flex gap-6">
+<a href="#" class="text-white/40 text-sm hover:text-white/70 transition-colors">Privacy Policy</a>
+<a href="#" class="text-white/40 text-sm hover:text-white/70 transition-colors">Terms of Service</a>
+<a href="#" class="text-white/40 text-sm hover:text-white/70 transition-colors">Sitemap</a>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- Floating CTA Button -->
+<button class="floating-cta" onclick="openModal()" title="Call Us Now">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+</svg>
+</button>
+
+<!-- Quote Modal -->
+<div class="modal-overlay" id="quoteModal">
+<div class="modal-content">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-2xl font-bold text-[var(--navy)]">Get a Free Quote</h3>
+<button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+</div>
+<form onsubmit="handleQuoteSubmit(event)">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+<input type="text" class="form-input" placeholder="Your full name" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+<input type="tel" class="form-input" placeholder="(555) 123-4567" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Service Needed</label>
+<select class="form-input">
+<option value="">Select a service...</option>
+<option>Emergency Repair</option>
+<option>Drain Cleaning</option>
+<option>Water Heater</option>
+<option>Bathroom Renovation</option>
+<option>Pipe Repair</option>
+<option>Fixture Installation</option>
+<option>Sewer Line Services</option>
+<option>Gas Line Services</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
+<input type="date" class="form-input">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Brief Description</label>
+<textarea class="form-input resize-none" rows="3" placeholder="Describe your plumbing issue..."></textarea>
+</div>
+<button type="submit" class="btn-primary w-full justify-center">
+<i data-lucide="calendar-check" class="w-5 h-5"></i>
+Request Quote
+</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+</div>
+<div>
+<div class="font-semibold text-sm text-[var(--navy)]" id="toastTitle">Success!</div>
+<div class="text-xs text-[var(--text-muted)]" id="toastMessage">Your message has been sent.</div>
+</div>
+</div>
+
+<script>
+// Initialize Lucide icons
+lucide.createIcons();
+
+// ===== NAVBAR SCROLL EFFECT =====
+const navbar = document.getElementById('navbar');
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+// Navbar background
+if (window.scrollY > 50) {
+navbar.classList.add('scrolled');
+} else {
+navbar.classList.remove('scrolled');
+}
+
+// Active nav link
+let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop - 100;
+if (window.scrollY >= sectionTop) {
+current = section.getAttribute('id');
+}
+});
+navLinks.forEach(link => {
+link.classList.remove('active');
+if (link.getAttribute('data-section') === current) {
+link.classList.add('active');
+}
+});
+});
+
+// ===== MOBILE MENU =====
+function toggleMobileMenu() {
+const menu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('mobileOverlay');
+menu.classList.toggle('open');
+overlay.classList.toggle('hidden');
+}
+
+// ===== SCROLL TO SECTION =====
+function scrollToSection(id) {
+document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== WATER DROP ANIMATION =====
+function createWaterDrops() {
+const container = document.getElementById('waterDrops');
+for (let i = 0; i < 20; i++) {
+const drop = document.createElement('div');
+drop.className = 'water-drop';
+const size = Math.random() * 20 + 5;
+drop.style.width = size + 'px';
+drop.style.height = size + 'px';
+drop.style.left = Math.random() * 100 + '%';
+drop.style.animationDuration = (Math.random() * 10 + 8) + 's';
+drop.style.animationDelay = (Math.random() * 10) + 's';
+container.appendChild(drop);
+}
+}
+createWaterDrops();
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+const counters = document.querySelectorAll('.counter-value');
+counters.forEach(counter => {
+const target = parseInt(counter.getAttribute('data-target'));
+const duration = 2000;
+const step = target / (duration / 16);
+let current = 0;
+
+const updateCounter = () => {
+current += step;
+if (current < target) {
+counter.textContent = Math.floor(current).toLocaleString();
+requestAnimationFrame(updateCounter);
+} else {
+counter.textContent = target.toLocaleString();
+if (target === 98) counter.textContent = target + '%';
+if (target === 15) counter.textContent = target + '+';
+if (target === 12000) counter.textContent = '12,000+';
+}
+};
+updateCounter();
+});
+}
+
+// ===== SCROLL REVEAL =====
+function handleReveal() {
+const reveals = document.querySelectorAll('.reveal');
+reveals.forEach(el => {
+const windowHeight = window.innerHeight;
+const elementTop = el.getBoundingClientRect().top;
+const revealPoint = 100;
+if (elementTop < windowHeight - revealPoint) {
+el.classList.add('visible');
+}
+});
+}
+
+window.addEventListener('scroll', handleReveal);
+window.addEventListener('load', () => {
+handleReveal();
+animateCounters();
+});
+
+// ===== PRICING TOGGLE =====
+let isCommercial = false;
+function togglePricing() {
+isCommercial = !isCommercial;
+const toggle = document.getElementById('pricingToggle');
+const resLabel = document.getElementById('residentialLabel');
+const comLabel = document.getElementById('commercialLabel');
+
+toggle.classList.toggle('active');
+resLabel.classList.toggle('text-[var(--navy)]');
+resLabel.classList.toggle('text-gray-400');
+comLabel.classList.toggle('text-[var(--navy)]');
+comLabel.classList.toggle('text-gray-400');
+
+document.querySelectorAll('[data-residential]').forEach(el => {
+const price = isCommercial ? el.getAttribute('data-commercial') : el.getAttribute('data-residential');
+el.textContent = '$' + price;
+});
+}
+
+// ===== FAQ ACCORDION =====
+function toggleFaq(btn) {
+const item = btn.parentElement;
+const wasOpen = item.classList.contains('open');
+document.querySelectorAll('.faq-item').forEach(faq => faq.classList.remove('open'));
+if (!wasOpen) item.classList.add('open');
+}
+
+// ===== TESTIMONIAL CAROUSEL =====
+let currentSlide = 0;
+const track = document.getElementById('testimonialTrack');
+let slidesPerView = 3;
+
+function updateSlidesPerView() {
+if (window.innerWidth < 768) slidesPerView = 1;
+else if (window.innerWidth < 1024) slidesPerView = 2;
+else slidesPerView = 3;
+}
+
+function getTotalSlides() {
+return track.children.length;
+}
+
+function getMaxSlide() {
+return Math.max(0, getTotalSlides() - slidesPerView);
+}
+
+function updateCarousel() {
+updateSlidesPerView();
+const slideWidth = 100 / slidesPerView;
+const offset = currentSlide * slideWidth;
+track.style.transform = `translateX(-${offset}%)`;
+updateDots();
+}
+
+function slideCarousel(direction) {
+updateSlidesPerView();
+const maxSlide = getMaxSlide();
+currentSlide = Math.max(0, Math.min(maxSlide, currentSlide + direction));
+updateCarousel();
+}
+
+function updateDots() {
+const dotsContainer = document.getElementById('carouselDots');
+const totalDots = getMaxSlide() + 1;
+dotsContainer.innerHTML = '';
+for (let i = 0; i < totalDots; i++) {
+const dot = document.createElement('button');
+dot.className = 'carousel-dot' + (i === currentSlide ? ' active' : '');
+dot.onclick = () => { currentSlide = i; updateCarousel(); };
+dotsContainer.appendChild(dot);
+}
+}
+
+window.addEventListener('resize', updateCarousel);
+updateCarousel();
+
+// Auto-slide
+setInterval(() => {
+updateSlidesPerView();
+const maxSlide = getMaxSlide();
+currentSlide = currentSlide >= maxSlide ? 0 : currentSlide + 1;
+updateCarousel();
+}, 5000);
+
+// ===== MODAL =====
+function openModal() {
+document.getElementById('quoteModal').classList.add('active');
+document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+document.getElementById('quoteModal').classList.remove('active');
+document.body.style.overflow = '';
+}
+
+document.getElementById('quoteModal').addEventListener('click', (e) => {
+if (e.target === document.getElementById('quoteModal')) closeModal();
+});
+
+// ===== TOAST =====
+function showToast(title, message) {
+const toast = document.getElementById('toast');
+document.getElementById('toastTitle').textContent = title;
+document.getElementById('toastMessage').textContent = message;
+toast.classList.add('show');
+setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// ===== FORM SUBMISSIONS =====
+function handleFormSubmit(e) {
+e.preventDefault();
+const btn = document.getElementById('submitBtn');
+btn.innerHTML = '<svg class="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg> Sending...';
+btn.disabled = true;
+
+setTimeout(() => {
+btn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> Sent Successfully!';
+btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+btn.style.boxShadow = '0 4px 15px rgba(34,197,94,0.3)';
+lucide.createIcons();
+showToast('Message Sent!', 'We\'ll get back to you within 24 hours.');
+
+setTimeout(() => {
+btn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> Send Message';
+btn.style.background = '';
+btn.style.boxShadow = '';
+btn.disabled = false;
+lucide.createIcons();
+document.getElementById('contactForm').reset();
+}, 3000);
+}, 1500);
+}
+
+function handleQuoteSubmit(e) {
+e.preventDefault();
+showToast('Quote Requested!', 'Our team will contact you shortly.');
+closeModal();
+e.target.reset();
+}
+
+function showServiceDetail(serviceName) {
+showToast(serviceName, 'Click "Get a Free Quote" to learn more about this service.');
+}
+
+// ===== PHONE FORMAT =====
+document.getElementById('phone')?.addEventListener('input', function(e) {
+let value = e.target.value.replace(/\D/g, '');
+if (value.length > 10) value = value.slice(0, 10);
+if (value.length >= 6) {
+value = '(' + value.slice(0,3) + ') ' + value.slice(3,6) + '-' + value.slice(6);
+} else if (value.length >= 3) {
+value = '(' + value.slice(0,3) + ') ' + value.slice(3);
+} else if (value.length > 0) {
+value = '(' + value;
+}
+e.target.value = value;
+});
+
+// ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function(e) {
+e.preventDefault();
+const target = document.querySelector(this.getAttribute('href'));
+if (target) {
+target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+});
+});
+
+// ===== PARALLAX EFFECT ON HERO =====
+window.addEventListener('scroll', () => {
+const scrolled = window.scrollY;
+const hero = document.querySelector('.hero-section');
+if (scrolled < window.innerHeight) {
+hero.style.setProperty('--scroll', scrolled * 0.3 + 'px');
+}
+});
+</script>
+</body>
+</html>
+
